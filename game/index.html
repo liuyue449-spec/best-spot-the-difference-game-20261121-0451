@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>找不同大作战 · Spot Hunt</title>
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><svg class="mag" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="10" cy="10" r="6" fill="none" stroke="#fff8ea" stroke-width="2.5"/><line x1="14.5" y1="14.5" x2="20" y2="20" stroke="#fff8ea" stroke-width="2.5" stroke-linecap="round"/></svg> 找不同大作战 <span class="brand-en">SPOT HUNT</span></div>
+  <div class="level-name" id="level-name">开始画面</div>
+</header>
+
+<main id="game">
+  <section class="hud" aria-label="游戏状态">
+    <div class="hud-item timer">
+      <span class="hud-label">时间</span>
+      <span class="timer-text" id="timer-text">2:30</span>
+      <span class="timer-bar"><span class="timer-fill" id="timer-fill"></span></span>
+    </div>
+    <div class="hud-item">
+      <span class="hud-label">进度</span>
+      <span class="hud-value" id="count-text">已找到 0 / 7 · 还剩 7 处</span>
+      <span class="hud-sub" id="count-en">0/7 found</span>
+    </div>
+    <div class="hud-item">
+      <span class="hud-label">分数</span>
+      <span class="hud-value" id="score-text">0</span>
+      <span class="hud-sub combo" id="combo-text"></span>
+    </div>
+    <div class="hud-buttons">
+      <button id="hint-btn" type="button">提示 (3)</button>
+      <button id="restart-btn" type="button">重开本关</button>
+      <button id="home-btn" type="button">回主页</button>
+    </div>
+  </section>
+
+  <section class="panels">
+    <figure class="panel">
+      <figcaption>左图 A</figcaption>
+      <canvas id="panel-a" width="600" height="440"></canvas>
+    </figure>
+    <div class="vs" aria-hidden="true">VS</div>
+    <figure class="panel">
+      <figcaption>右图 B</figcaption>
+      <canvas id="panel-b" width="600" height="440"></canvas>
+    </figure>
+  </section>
+
+  <p class="toast" id="toast" role="status"></p>
+  <p class="help">玩法：左右两幅画有几处不同，点在任一幅画的不同处就能圈出来。点错扣 5 秒，连击有加分。快捷键：H 提示 · R 重开 · Esc 回主页。</p>
+</main>
+
+<!-- 开始画面 -->
+<section class="overlay" id="start-screen">
+  <div class="sheet">
+    <h1>找不同大作战</h1>
+    <p class="tagline">三幅手绘场景 · 25 处不同 · 眼力与手速的比拼</p>
+    <p class="rules">左右两幅画几乎一模一样——但藏着几处不同。点中不同处画圈得分，
+      点错扣 5 秒，5 秒内连续找到有连击加分，提示每关限量供应。</p>
+    <div class="level-cards">
+      <button class="level-card" type="button" data-level="0">
+        <canvas data-level="0" width="300" height="220"></canvas>
+        <strong>第 1 关 · 橘猫的午后客厅</strong>
+        <span>7 处不同 · 2:30 · 提示 ×3</span>
+      </button>
+      <button class="level-card" type="button" data-level="1">
+        <canvas data-level="1" width="300" height="220"></canvas>
+        <strong>第 2 关 · 深夜拉面摊</strong>
+        <span>8 处不同 · 3:00 · 提示 ×3</span>
+      </button>
+      <button class="level-card" type="button" data-level="2">
+        <canvas data-level="2" width="300" height="220"></canvas>
+        <strong>第 3 关 · 灯塔下的小渔村</strong>
+        <span>10 处不同 · 3:30 · 提示 ×2</span>
+      </button>
+    </div>
+    <p class="keys">鼠标点击找不同 · 键盘 1/2/3 选关 · H 提示 · R 重开</p>
+  </div>
+</section>
+
+<!-- 过关结算 -->
+<section class="overlay hidden" id="clear-modal">
+  <div class="sheet small">
+    <h2 id="clear-title">第 1 关完成！</h2>
+    <p class="stars" id="clear-stars">★★★</p>
+    <p id="clear-detail"></p>
+    <button id="next-btn" type="button" class="primary">下一关 →</button>
+  </div>
+</section>
+
+<!-- 时间到 -->
+<section class="overlay hidden" id="over-modal">
+  <div class="sheet small">
+    <h2>时间到！</h2>
+    <p id="over-detail"></p>
+    <p class="hint-line">没找到的已经用虚线圈出来了，记住它们再来一次。</p>
+    <button id="retry-btn" type="button" class="primary">再试一次</button>
+    <button id="over-home-btn" type="button">回主页</button>
+  </div>
+</section>
+
+<!-- 通关 -->
+<section class="overlay hidden" id="win-modal">
+  <div class="sheet small">
+    <h2>三关全通！</h2>
+    <p class="stars">★★★</p>
+    <p id="win-score"></p>
+    <p id="win-detail"></p>
+    <button id="again-btn" type="button" class="primary">再玩一次</button>
+    <button id="win-home-btn" type="button">回主页</button>
+  </div>
+</section>
+
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
